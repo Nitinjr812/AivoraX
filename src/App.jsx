@@ -1,7 +1,15 @@
- const App = () => {
+ 
+import { BrowserRouter, Route,   Routes } from "react-router-dom" 
+import Home from "./pages/Home"
+
+const App = () => {
   return (
-    <>
-    <h1>Starting Soon</h1>
+    <> 
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </BrowserRouter>
     </>
   )
 }
