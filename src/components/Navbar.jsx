@@ -5,7 +5,6 @@ import {
   User, Settings, MoreVertical, Star, Menu, X,
 } from "lucide-react";
 
-// ── Void Neon Theme ──────────────────────────────────────────────
 const T = {
   bg:      "#0A0A0F",
   surface: "#12121A",
@@ -25,18 +24,18 @@ const BADGE_STYLE = {
 };
 
 const NAV_ITEMS = [
-  { icon: Layers,         label: "Aivorax"       },
-  { icon: Plus,           label: "Create New",    badge: "Hot", badgeType: "hot" },
-  { icon: Image,          label: "Image Editor"  },
-  { icon: Sparkles,       label: "AI Generate",   badge: "New", badgeType: "new" },
-  { icon: LayoutTemplate, label: "Templates"     },
-  { icon: Scissors,       label: "BG Remover",    badge: "Pro", badgeType: "pro" },
-  { icon: Globe,          label: "Social Kit"    },
-  { icon: FolderOpen,     label: "Projects"      },
-  { icon: Heart,          label: "Favorites"     },
-  { icon: Search,         label: "Explore"       },
-  { icon: User,           label: "Profile"       },
-  { icon: Settings,       label: "Settings"      },
+  { icon: Layers,         label: "Aivorax"                          },
+  { icon: Plus,           label: "Create New",  badge: "Hot", badgeType: "hot" },
+  { icon: Image,          label: "Image Editor"                     },
+  { icon: Sparkles,       label: "AI Generate", badge: "New", badgeType: "new" },
+  { icon: LayoutTemplate, label: "Templates"                        },
+  { icon: Scissors,       label: "BG Remover",  badge: "Pro", badgeType: "pro" },
+  { icon: Globe,          label: "Social Kit"                       },
+  { icon: FolderOpen,     label: "Projects"                         },
+  { icon: Heart,          label: "Favorites"                        },
+  { icon: Search,         label: "Explore"                          },
+  { icon: User,           label: "Profile"                          },
+  { icon: Settings,       label: "Settings"                         },
 ];
 
 const SIDEBAR_SECTIONS = [
@@ -46,7 +45,26 @@ const SIDEBAR_SECTIONS = [
   { label: "Account", items: NAV_ITEMS.slice(10)    },
 ];
 
-// ── Reusable Badge ───────────────────────────────────────────────
+// ── Animation keyframes injected once ───────────────────────────
+const GLOBAL_STYLES = `
+  @keyframes navSlideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0);     }
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.5; }
+    50%       { opacity: 1;   }
+  }
+  @keyframes activeUnderline {
+    from { width: 0; opacity: 0; }
+    to   { width: 60%; opacity: 1; }
+  }
+  @keyframes sidebarSlide {
+    from { opacity: 0; transform: translateX(-12px); }
+    to   { opacity: 1; transform: translateX(0);     }
+  }
+`;
+
 function Badge({ type, label }) {
   return (
     <span style={{
@@ -57,24 +75,24 @@ function Badge({ type, label }) {
   );
 }
 
-// ── Logo ─────────────────────────────────────────────────────────
 function Logo({ size = "md" }) {
   const big = size === "md";
   return (
     <div style={{ display: "flex", alignItems: "center", gap: big ? 10 : 8, flexShrink: 0 }}>
       <div style={{
-        width: big ? 34 : 28, height: big ? 34 : 28,
+        width: big ? 34 : 30, height: big ? 34 : 30,
         borderRadius: big ? 9 : 8, flexShrink: 0,
         background: `linear-gradient(135deg, ${T.accent}, ${T.pink})`,
         display: "flex", alignItems: "center", justifyContent: "center",
-        boxShadow: `0 0 14px rgba(124,111,239,0.35)`,
+        boxShadow: `0 0 16px rgba(124,111,239,0.4)`,
+        transition: "box-shadow 0.3s",
       }}>
         <Layers size={big ? 16 : 14} color="#fff" />
       </div>
       <div>
         <div style={{
           fontFamily: "'Syne', sans-serif", fontWeight: 800,
-          fontSize: big ? 18 : 15, letterSpacing: 0.3,
+          fontSize: big ? 18 : 16, letterSpacing: 0.3,
           background: `linear-gradient(135deg, ${T.accent}, ${T.pink})`,
           WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
         }}>Aivorax</div>
@@ -88,15 +106,26 @@ function Logo({ size = "md" }) {
   );
 }
 
-// ── Avatar ───────────────────────────────────────────────────────
 function Avatar({ size = 32 }) {
   return (
     <div style={{
       width: size, height: size, borderRadius: "50%", flexShrink: 0,
       background: `linear-gradient(135deg, ${T.accent}, ${T.pink})`,
       display: "flex", alignItems: "center", justifyContent: "center",
-      fontSize: size * 0.38, fontWeight: 700, color: "#fff",
-    }}>AX</div>
+      fontSize: size * 0.34, fontWeight: 700, color: "#fff",
+      cursor: "pointer",
+      transition: "transform 0.2s, box-shadow 0.2s",
+      boxShadow: "0 0 0 0px rgba(124,111,239,0.4)",
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.transform = "scale(1.08)";
+      e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,111,239,0.3)";
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.transform = "scale(1)";
+      e.currentTarget.style.boxShadow = "0 0 0 0px rgba(124,111,239,0.4)";
+    }}
+    >AX</div>
   );
 }
 
@@ -110,28 +139,34 @@ function DesktopNavbar({ active, setActive }) {
       display: "flex",
       alignItems: "center",
       padding: "0 24px",
-      height: 58,
-      gap: 6,
+      height: 60,
+      gap: 2,
       position: "relative",
       fontFamily: "'DM Sans', sans-serif",
       boxSizing: "border-box",
+      overflow: "hidden",
+      animation: "navSlideDown 0.35s cubic-bezier(0.22,1,0.36,1) both",
     }}>
-      {/* top accent line */}
+      {/* Animated top glow line */}
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, height: 1,
-        background: `linear-gradient(90deg, transparent, ${T.accent}, ${T.pink}, transparent)`,
+        background: `linear-gradient(90deg, transparent 0%, ${T.accent} 40%, ${T.pink} 60%, transparent 100%)`,
+        animation: "glowPulse 3s ease-in-out infinite",
         pointerEvents: "none",
       }} />
 
       {/* Logo */}
-      <div style={{ marginRight: 28 }}>
+      <div style={{ flexShrink: 0, marginRight: 18 }}>
         <Logo size="sm" />
       </div>
 
-      {/* Nav links — scrollable row */}
+      {/* Divider */}
+      <div style={{ width: 1, height: 22, background: T.border, marginRight: 16, flexShrink: 0 }} />
+
+      {/* Nav links */}
       <div style={{
-        display: "flex", alignItems: "center", gap: 2,
-        flex: 1, overflowX: "auto", minWidth: 0,
+        display: "flex", alignItems: "center", gap: 1,
+        flex: 1, minWidth: 0, overflow: "hidden",
       }}>
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -142,47 +177,79 @@ function DesktopNavbar({ active, setActive }) {
               onClick={() => setActive(item.label)}
               style={{
                 display: "flex", alignItems: "center", gap: 6,
-                padding: "7px 12px", borderRadius: 8,
+                padding: "7px 11px", borderRadius: 8,
                 cursor: "pointer", border: "none", outline: "none",
                 background: on ? "rgba(124,111,239,0.13)" : "transparent",
                 color: on ? T.text : T.muted,
-                fontSize: 13, fontWeight: 500,
+                fontSize: 12.5, fontWeight: 500,
                 fontFamily: "'DM Sans', sans-serif",
                 whiteSpace: "nowrap", flexShrink: 0,
-                transition: "background 0.15s, color 0.15s",
+                position: "relative",
+                transition: "background 0.2s, color 0.2s, transform 0.15s",
               }}
               onMouseEnter={e => {
                 if (!on) {
                   e.currentTarget.style.background = T.card;
                   e.currentTarget.style.color = T.text;
+                  e.currentTarget.style.transform = "translateY(-1px)";
                 }
               }}
               onMouseLeave={e => {
                 if (!on) {
                   e.currentTarget.style.background = "transparent";
                   e.currentTarget.style.color = T.muted;
+                  e.currentTarget.style.transform = "translateY(0)";
                 }
               }}
+              onMouseDown={e => { e.currentTarget.style.transform = "scale(0.95)"; }}
+              onMouseUp={e => { e.currentTarget.style.transform = on ? "translateY(0)" : "translateY(-1px)"; }}
             >
-              <Icon size={15} color={on ? T.accent : T.muted} strokeWidth={2} />
+              <Icon size={14} color={on ? T.accent : T.muted} strokeWidth={2} />
               {item.label}
               {item.badge && <Badge type={item.badgeType} label={item.badge} />}
+
+              {/* Active underline bar */}
+              {on && (
+                <div style={{
+                  position: "absolute", bottom: -1, left: "50%",
+                  transform: "translateX(-50%)",
+                  height: 2, borderRadius: 2,
+                  background: `linear-gradient(90deg, ${T.accent}, ${T.pink})`,
+                  animation: "activeUnderline 0.25s ease forwards",
+                }} />
+              )}
             </button>
           );
         })}
       </div>
 
       {/* Right side */}
-      <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: 8, flexShrink: 0 }}>
-        <button style={{
-          display: "flex", alignItems: "center", gap: 7,
-          padding: "7px 14px", borderRadius: 8, cursor: "pointer",
-          background: `linear-gradient(135deg, ${T.accent}, ${T.pink})`,
-          border: "none", color: "#fff", fontSize: 13, fontWeight: 600,
-          fontFamily: "'DM Sans', sans-serif",
-          boxShadow: `0 4px 14px rgba(124,111,239,0.35)`,
-        }}>
-          <Plus size={14} color="#fff" />
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginLeft: 12, flexShrink: 0 }}>
+        <button
+          style={{
+            display: "flex", alignItems: "center", gap: 6,
+            padding: "7px 14px", borderRadius: 8, cursor: "pointer",
+            background: `linear-gradient(135deg, ${T.accent}, ${T.pink})`,
+            border: "none", color: "#fff", fontSize: 12.5, fontWeight: 600,
+            fontFamily: "'DM Sans', sans-serif",
+            boxShadow: "0 4px 16px rgba(124,111,239,0.3)",
+            whiteSpace: "nowrap",
+            transition: "opacity 0.2s, transform 0.15s, box-shadow 0.2s",
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.opacity = "0.88";
+            e.currentTarget.style.transform = "translateY(-1px)";
+            e.currentTarget.style.boxShadow = "0 6px 22px rgba(124,111,239,0.45)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.opacity = "1";
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.boxShadow = "0 4px 16px rgba(124,111,239,0.3)";
+          }}
+          onMouseDown={e => { e.currentTarget.style.transform = "scale(0.96)"; }}
+          onMouseUp={e => { e.currentTarget.style.transform = "translateY(-1px)"; }}
+        >
+          <Plus size={13} color="#fff" />
           New Image
         </button>
         <Avatar size={32} />
@@ -195,7 +262,6 @@ function DesktopNavbar({ active, setActive }) {
 function MobileSidebar({ active, setActive, open, onClose }) {
   return (
     <>
-      {/* Overlay */}
       {open && (
         <div
           onClick={onClose}
@@ -203,11 +269,11 @@ function MobileSidebar({ active, setActive, open, onClose }) {
             position: "fixed", inset: 0,
             background: "rgba(0,0,0,0.65)",
             zIndex: 998,
+            animation: "navSlideDown 0.2s ease both",
           }}
         />
       )}
 
-      {/* Sidebar panel */}
       <aside style={{
         position: "fixed", top: 0, left: 0, bottom: 0,
         width: 264, zIndex: 999,
@@ -218,14 +284,13 @@ function MobileSidebar({ active, setActive, open, onClose }) {
         transition: "transform 0.32s cubic-bezier(.4,0,.2,1)",
         fontFamily: "'DM Sans', sans-serif",
       }}>
-        {/* top glow */}
         <div style={{
           position: "absolute", top: 0, left: 0, right: 0, height: 1,
           background: `linear-gradient(90deg, transparent, ${T.accent}, ${T.pink}, transparent)`,
+          animation: "glowPulse 3s ease-in-out infinite",
           pointerEvents: "none",
         }} />
 
-        {/* Header */}
         <div style={{
           display: "flex", alignItems: "center", justifyContent: "space-between",
           padding: "18px 16px 14px",
@@ -238,20 +303,22 @@ function MobileSidebar({ active, setActive, open, onClose }) {
               width: 30, height: 30, borderRadius: 8, flexShrink: 0,
               background: T.card, border: `1px solid ${T.border}`,
               display: "flex", alignItems: "center", justifyContent: "center",
-              cursor: "pointer", color: T.muted,
+              cursor: "pointer",
+              transition: "background 0.2s, transform 0.15s",
             }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#222230"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = T.card; }}
+            onMouseDown={e => { e.currentTarget.style.transform = "scale(0.9)"; }}
+            onMouseUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
           >
             <X size={14} color={T.muted} />
           </button>
         </div>
 
-        {/* Nav sections */}
         <div style={{ flex: 1, overflowY: "auto", padding: "12px 10px" }}>
           {SIDEBAR_SECTIONS.map((sec, si) => (
-            <div key={si}>
-              {si > 0 && (
-                <div style={{ height: 1, background: T.border, margin: "8px 6px" }} />
-              )}
+            <div key={si} style={{ animation: open ? `sidebarSlide 0.3s ${si * 0.05}s ease both` : "none" }}>
+              {si > 0 && <div style={{ height: 1, background: T.border, margin: "8px 6px" }} />}
               <div style={{
                 fontSize: 10, letterSpacing: 2, textTransform: "uppercase",
                 color: T.muted, padding: "0 8px", marginBottom: 5, fontWeight: 500,
@@ -275,7 +342,19 @@ function MobileSidebar({ active, setActive, open, onClose }) {
                       fontSize: 13.5, fontWeight: 500,
                       fontFamily: "'DM Sans', sans-serif",
                       textAlign: "left", position: "relative",
-                      transition: "all 0.15s", outline: "none",
+                      transition: "all 0.18s", outline: "none",
+                    }}
+                    onMouseEnter={e => {
+                      if (!on) {
+                        e.currentTarget.style.background = T.card;
+                        e.currentTarget.style.color = T.text;
+                      }
+                    }}
+                    onMouseLeave={e => {
+                      if (!on) {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.color = T.muted;
+                      }
                     }}
                   >
                     {on && (
@@ -296,14 +375,22 @@ function MobileSidebar({ active, setActive, open, onClose }) {
           ))}
         </div>
 
-        {/* Footer */}
         <div style={{ padding: "12px 14px", borderTop: `1px solid ${T.border}` }}>
-          {/* Pro card */}
           <div style={{
             background: "linear-gradient(135deg, rgba(124,111,239,0.15), rgba(232,93,138,0.12))",
             border: "1px solid rgba(124,111,239,0.3)",
             borderRadius: 12, padding: 12, marginBottom: 12, cursor: "pointer",
-          }}>
+            transition: "transform 0.2s, border-color 0.2s",
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.transform = "translateY(-1px)";
+            e.currentTarget.style.borderColor = "rgba(124,111,239,0.5)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.transform = "translateY(0)";
+            e.currentTarget.style.borderColor = "rgba(124,111,239,0.3)";
+          }}
+          >
             <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 5 }}>
               <div style={{
                 width: 24, height: 24, borderRadius: 6, flexShrink: 0,
@@ -322,7 +409,6 @@ function MobileSidebar({ active, setActive, open, onClose }) {
             </p>
           </div>
 
-          {/* User row */}
           <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
             <Avatar size={30} />
             <div style={{ flex: 1 }}>
@@ -334,7 +420,11 @@ function MobileSidebar({ active, setActive, open, onClose }) {
               background: T.card, border: `1px solid ${T.border}`,
               display: "flex", alignItems: "center", justifyContent: "center",
               cursor: "pointer",
-            }}>
+              transition: "background 0.2s",
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = "#222230"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = T.card; }}
+            >
               <MoreVertical size={13} color={T.muted} />
             </div>
           </div>
@@ -352,13 +442,15 @@ function MobileTopBar({ onMenuClick }) {
       background: T.surface,
       borderBottom: `1px solid ${T.border}`,
       display: "flex", alignItems: "center",
-      padding: "0 16px", height: 52, gap: 12,
+      padding: "0 16px", height: 54, gap: 12,
       position: "relative", boxSizing: "border-box",
       fontFamily: "'DM Sans', sans-serif",
+      animation: "navSlideDown 0.35s cubic-bezier(0.22,1,0.36,1) both",
     }}>
       <div style={{
         position: "absolute", top: 0, left: 0, right: 0, height: 1,
         background: `linear-gradient(90deg, transparent, ${T.accent}, ${T.pink}, transparent)`,
+        animation: "glowPulse 3s ease-in-out infinite",
         pointerEvents: "none",
       }} />
       <button
@@ -368,7 +460,12 @@ function MobileTopBar({ onMenuClick }) {
           background: T.card, border: `1px solid ${T.border}`,
           display: "flex", alignItems: "center", justifyContent: "center",
           cursor: "pointer",
+          transition: "background 0.2s, transform 0.15s",
         }}
+        onMouseEnter={e => { e.currentTarget.style.background = "#222230"; }}
+        onMouseLeave={e => { e.currentTarget.style.background = T.card; }}
+        onMouseDown={e => { e.currentTarget.style.transform = "scale(0.92)"; }}
+        onMouseUp={e => { e.currentTarget.style.transform = "scale(1)"; }}
       >
         <Menu size={16} color={T.muted} />
       </button>
@@ -380,7 +477,7 @@ function MobileTopBar({ onMenuClick }) {
   );
 }
 
-// ── Main Navbar Export ───────────────────────────────────────────
+// ── Root ─────────────────────────────────────────────────────────
 const Navbar = () => {
   const [active, setActive] = useState("Aivorax");
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -395,6 +492,9 @@ const Navbar = () => {
 
   return (
     <>
+      {/* Inject keyframes once */}
+      <style>{GLOBAL_STYLES}</style>
+
       <link
         href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap"
         rel="stylesheet"
@@ -416,4 +516,5 @@ const Navbar = () => {
     </>
   );
 };
+
 export default Navbar;
