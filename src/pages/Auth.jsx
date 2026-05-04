@@ -257,8 +257,7 @@ export default function AivoraxAuth() {
     setFormKey((k) => k + 1);
   };
 
-  const showAlert = (msg, type) => setAlert({ msg, type });
-  const hideAlert = () => setAlert(null);
+  const showAlert = (msg, type) => setAlert({ msg, type }); 
 
   const checkStrength = (val) => {
     let score = 0;
@@ -297,7 +296,7 @@ export default function AivoraxAuth() {
     if (userdata.find((u) => u.email === email)) { showAlert("An account with this email already exists.", "error"); return; }
     userdata.push({ name, email, password: pass });
     localStorage.setItem("userdata", JSON.stringify(userdata));
-    showAlert(`Account created! Welcome to Aivorax, ${name} 🚀`, "success");
+    showAlert(`Account created! Welcome to Aivorax, ${name} `, "success");
     navigate("/")
 
   };
@@ -441,7 +440,7 @@ export default function AivoraxAuth() {
                         Forgot password?
                       </span>
                     </div>
-                    <PrimaryButton onClick={doLogin}>Sign In →</PrimaryButton>
+                    <PrimaryButton   onClick={doLogin}>Sign In →</PrimaryButton>
                   </div>
                 ) : (
                   /* SIGNUP */
