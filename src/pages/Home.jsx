@@ -537,7 +537,7 @@ body { background: var(--av-bg); color: var(--av-text); font-family: 'DM Sans', 
 @media (max-width: 700px) {
   .av-steps::before { display: none; }
   .av-hero-canvas .av-canvas-grid { grid-template-columns: repeat(2, 1fr); }
-  .av-hero-canvas .av-canvas-grid > *:last-child { display: none; }
+  .av-hero-canvas .av-canvas-grid { grid-template-columns: repeat(2, 1fr); }
   .av-cta-banner { padding: 48px 24px; }
   .av-float-badge { display: none !important; }
 }
@@ -588,7 +588,6 @@ const TESTIMONIALS = [
   { stars: 5, text: "I used to spend hours prompting other tools. With Aivorax the first result is almost always perfect. It's witchcraft.", name: "Marcus T.", role: "Indie Game Developer", init: "MT", grad: "linear-gradient(135deg,#3DD9C5,#7C6FEF)" },
   { stars: 5, text: "Our marketing team produces 10× more visual content now. The style consistency feature is absolutely game-changing.", name: "Priya M.", role: "Head of Growth @ Novu", init: "PM", grad: "linear-gradient(135deg,#E85D8A,#FF9E73)" },
 ];
-
 
 const PREVIEW_CARDS = [
   { style: "--c1:rgba(124,111,239,0.22);--c2:rgba(61,217,197,0.1);", image: "https://cdn.leonardo.ai/users/090a8365-0332-4ae7-a87b-584a2c29b6b7/generations/1f14793c-0fff-6300-abfe-5f62f3dd74f7/lucid-origin_A_stunning_anime_girl_standing_under_cherry_blossom_trees_soft_pink_petals_falli-0.jpg" },
