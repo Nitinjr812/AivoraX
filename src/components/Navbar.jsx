@@ -6,46 +6,45 @@ import {
 } from "lucide-react";
 
 const T = {
-  bg:      "#0A0A0F",
+  bg: "#0A0A0F",
   surface: "#12121A",
-  card:    "#1A1A26",
-  border:  "#2A2A3E",
-  accent:  "#7C6FEF",
-  pink:    "#E85D8A",
-  teal:    "#3DD9C5",
-  text:    "#F0EEFF",
-  muted:   "#8A8AA8",
+  card: "#1A1A26",
+  border: "#2A2A3E",
+  accent: "#7C6FEF",
+  pink: "#E85D8A",
+  teal: "#3DD9C5",
+  text: "#F0EEFF",
+  muted: "#8A8AA8",
 };
 
 const BADGE_STYLE = {
-  new: { background: "rgba(61,217,197,0.15)",  color: "#3DD9C5", border: "1px solid rgba(61,217,197,0.3)"   },
-  hot: { background: "rgba(232,93,138,0.15)",  color: "#E85D8A", border: "1px solid rgba(232,93,138,0.3)"   },
+  new: { background: "rgba(61,217,197,0.15)", color: "#3DD9C5", border: "1px solid rgba(61,217,197,0.3)" },
+  hot: { background: "rgba(232,93,138,0.15)", color: "#E85D8A", border: "1px solid rgba(232,93,138,0.3)" },
   pro: { background: "rgba(124,111,239,0.15)", color: "#7C6FEF", border: "1px solid rgba(124,111,239,0.25)" },
 };
 
 const NAV_ITEMS = [
-  { icon: Layers,         label: "Aivorax"                          },
-  { icon: Plus,           label: "Create New",  badge: "Hot", badgeType: "hot" },
-  { icon: Image,          label: "Image Editor"                     },
-  { icon: Sparkles,       label: "AI Generate", badge: "New", badgeType: "new" },
-  { icon: LayoutTemplate, label: "Templates"                        },
-  { icon: Scissors,       label: "BG Remover",  badge: "Pro", badgeType: "pro" },
-  { icon: Globe,          label: "Social Kit"                       },
-  { icon: FolderOpen,     label: "Projects"                         },
-  { icon: Heart,          label: "Favorites"                        },
-  { icon: Search,         label: "Explore"                          },
-  { icon: User,           label: "Profile"                          },
-  { icon: Settings,       label: "Settings"                         },
+  { icon: Layers, label: "Aivorax" },
+  { icon: Plus, label: "Create New", badge: "Hot", badgeType: "hot" },
+  { icon: Image, label: "Image Editor" },
+  { icon: Sparkles, label: "AI Generate", badge: "New", badgeType: "new" },
+  { icon: LayoutTemplate, label: "Templates" },
+  { icon: Scissors, label: "BG Remover", badge: "Pro", badgeType: "pro" },
+  { icon: Globe, label: "Social Kit" },
+  { icon: FolderOpen, label: "Projects" },
+  { icon: Heart, label: "Favorites" },
+  { icon: Search, label: "Explore" },
+  { icon: User, label: "Profile" },
+  { icon: Settings, label: "Settings" },
 ];
 
 const SIDEBAR_SECTIONS = [
-  { label: "Main",    items: NAV_ITEMS.slice(0, 4)  },
-  { label: "Tools",   items: NAV_ITEMS.slice(4, 7)  },
+  { label: "Main", items: NAV_ITEMS.slice(0, 4) },
+  { label: "Tools", items: NAV_ITEMS.slice(4, 7) },
   { label: "Library", items: NAV_ITEMS.slice(7, 10) },
-  { label: "Account", items: NAV_ITEMS.slice(10)    },
+  { label: "Account", items: NAV_ITEMS.slice(10) },
 ];
 
-// ── Animation keyframes injected once ───────────────────────────
 const GLOBAL_STYLES = `
   @keyframes navSlideDown {
     from { opacity: 0; transform: translateY(-10px); }
@@ -117,14 +116,14 @@ function Avatar({ size = 32 }) {
       transition: "transform 0.2s, box-shadow 0.2s",
       boxShadow: "0 0 0 0px rgba(124,111,239,0.4)",
     }}
-    onMouseEnter={e => {
-      e.currentTarget.style.transform = "scale(1.08)";
-      e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,111,239,0.3)";
-    }}
-    onMouseLeave={e => {
-      e.currentTarget.style.transform = "scale(1)";
-      e.currentTarget.style.boxShadow = "0 0 0 0px rgba(124,111,239,0.4)";
-    }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = "scale(1.08)";
+        e.currentTarget.style.boxShadow = "0 0 0 3px rgba(124,111,239,0.3)";
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = "0 0 0 0px rgba(124,111,239,0.4)";
+      }}
     >AX</div>
   );
 }
@@ -382,14 +381,14 @@ function MobileSidebar({ active, setActive, open, onClose }) {
             borderRadius: 12, padding: 12, marginBottom: 12, cursor: "pointer",
             transition: "transform 0.2s, border-color 0.2s",
           }}
-          onMouseEnter={e => {
-            e.currentTarget.style.transform = "translateY(-1px)";
-            e.currentTarget.style.borderColor = "rgba(124,111,239,0.5)";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.transform = "translateY(0)";
-            e.currentTarget.style.borderColor = "rgba(124,111,239,0.3)";
-          }}
+            onMouseEnter={e => {
+              e.currentTarget.style.transform = "translateY(-1px)";
+              e.currentTarget.style.borderColor = "rgba(124,111,239,0.5)";
+            }}
+            onMouseLeave={e => {
+              e.currentTarget.style.transform = "translateY(0)";
+              e.currentTarget.style.borderColor = "rgba(124,111,239,0.3)";
+            }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 5 }}>
               <div style={{
@@ -422,8 +421,8 @@ function MobileSidebar({ active, setActive, open, onClose }) {
               cursor: "pointer",
               transition: "background 0.2s",
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = "#222230"; }}
-            onMouseLeave={e => { e.currentTarget.style.background = T.card; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#222230"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = T.card; }}
             >
               <MoreVertical size={13} color={T.muted} />
             </div>
