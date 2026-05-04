@@ -589,15 +589,15 @@ const TESTIMONIALS = [
   { stars: 5, text: "Our marketing team produces 10× more visual content now. The style consistency feature is absolutely game-changing.", name: "Priya M.", role: "Head of Growth @ Novu", init: "PM", grad: "linear-gradient(135deg,#E85D8A,#FF9E73)" },
 ];
 
-const PREVIEW_CARDS = [
-  { style: "--c1:rgba(124,111,239,0.22);--c2:rgba(61,217,197,0.1);", emoji: "🌌" },
-  { style: "--c1:rgba(232,93,138,0.2);--c2:rgba(124,111,239,0.12);", emoji: "🦋" },
-  { style: "--c1:rgba(61,217,197,0.18);--c2:rgba(232,93,138,0.08);", emoji: "🔥" },
-  { style: "--c1:rgba(157,147,245,0.2);--c2:rgba(255,158,115,0.1);", emoji: "🌊" },
-  { style: "--c1:rgba(255,158,115,0.18);--c2:rgba(61,217,197,0.1);", emoji: "🏔️" },
-  { style: "--c1:rgba(61,217,197,0.15);--c2:rgba(124,111,239,0.15);", emoji: "🌺" },
-];
 
+const PREVIEW_CARDS = [
+  { style: "--c1:rgba(124,111,239,0.22);--c2:rgba(61,217,197,0.1);", image: "https://cdn.leonardo.ai/users/090a8365-0332-4ae7-a87b-584a2c29b6b7/generations/1f14793c-0fff-6300-abfe-5f62f3dd74f7/lucid-origin_A_stunning_anime_girl_standing_under_cherry_blossom_trees_soft_pink_petals_falli-0.jpg" },
+  { style: "--c1:rgba(232,93,138,0.2);--c2:rgba(124,111,239,0.12);", image: "https://cdn.leonardo.ai/users/090a8365-0332-4ae7-a87b-584a2c29b6b7/generations/1f147949-856b-6ff0-ab83-b01153c3ee5d/lucid-origin_A_cozy_scene_with_coffee_cup_warm_lighting_soft_shadows_aesthetic_table_setup_re-0.jpg" },
+  { style: "--c1:rgba(61,217,197,0.18);--c2:rgba(232,93,138,0.08);", image: "https://cdn.leonardo.ai/users/090a8365-0332-4ae7-a87b-584a2c29b6b7/generations/1f14794a-d36f-6cf0-b197-549b6a575b07/lucid-origin_A_minimal_luxury_scene_with_elegant_objects_soft_shadows_neutral_color_palette_p-0.jpg" },
+  { style: "--c1:rgba(157,147,245,0.2);--c2:rgba(255,158,115,0.1);", image: "https://cdn.leonardo.ai/users/090a8365-0332-4ae7-a87b-584a2c29b6b7/generations/1f14794b-fd18-6fb0-ab76-87a7323e2676/lucid-origin_A_person_standing_on_a_cliff_looking_at_a_vast_horizon_sunset_sky_feeling_of_fre-0.jpg" },
+  { style: "--c1:rgba(255,158,115,0.18);--c2:rgba(61,217,197,0.1);", image: "https://cdn.leonardo.ai/users/090a8365-0332-4ae7-a87b-584a2c29b6b7/generations/1f14794e-2332-62d0-8715-a62df6629ae6/lucid-origin_A_beautiful_anime_city_skyline_during_sunset_warm_golden_light_soft_clouds_calm_-0.jpg" },
+  { style: "--c1:rgba(61,217,197,0.15);--c2:rgba(124,111,239,0.15);", image: "https://cdn.leonardo.ai/users/090a8365-0332-4ae7-a87b-584a2c29b6b7/generations/1f14794f-5728-6110-824d-233882f6dfd0/lucid-origin_A_traditional_Japanese_street_in_anime_style_lanterns_glowing_evening_time_warm_-0.jpg" },
+];
 const TICKER_ITEMS = [
   ["Photorealism", ""],["Portrait Mode", ""],["Cinematic Lighting", ""],
   ["4K Export", ""],["Style Transfer", ""],["Batch Generate", ""],
@@ -695,10 +695,18 @@ export default function Home() {
             </div>
             <div className="av-canvas-grid">
               {PREVIEW_CARDS.map((c, i) => (
-                <div key={i} className="av-preview-card" style={{ style: c.style, "--c1": c.style.match(/--c1:(.*?);/)?.[1], "--c2": c.style.match(/--c2:(.*?);/)?.[1] }}>
-                  <div className="inner">{c.emoji}</div>
-                  <div style={{ position: "absolute", inset: 0, background: `linear-gradient(135deg, ${c.style.match(/--c1:(.*?);/)?.[1] ?? "transparent"}, ${c.style.match(/--c2:(.*?);/)?.[1] ?? "transparent"})` }} />
-                  <div style={{ position: "absolute", bottom: 8, left: 8, right: 8, fontSize: 10, color: "rgba(255,255,255,0.4)", fontWeight: 600 }}>aivorax-gen-{1000 + i * 137}.png</div>
+                <div key={i} className="av-preview-card">
+                  {c.image ? (
+                    <img
+                      src={c.image} alt=""
+                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", borderRadius: 12 }}
+                    />
+                  ) : (
+                    <div className="inner">{c.emoji}</div>
+                  )}
+                  {/* subtle bottom fade so filename text stays readable */}
+                  <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: "40%", background: "linear-gradient(transparent, rgba(0,0,0,0.55))", borderRadius: "0 0 12px 12px", pointerEvents: "none" }} />
+                  <div style={{ position: "absolute", bottom: 8, left: 8, right: 8, fontSize: 10, color: "rgba(255,255,255,0.6)", fontWeight: 600 }}>aivorax-gen-{1000 + i * 137}.png</div>
                 </div>
               ))}
             </div>
