@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // ─── Icons (inline SVG) ──────────────────────────────────────────
 const Icon = ({ path, size = 15, strokeWidth = 1.9 }) => (
@@ -35,10 +36,10 @@ const ICONS = {
 // ─── Nav data ────────────────────────────────────────────────────
 const NAV_ITEMS = [
   { label: "Home", icon: "home" },
-    { label: "AI Generate", icon: "ai", badge: "New", badgeType: "new" },
+  { label: "AI Generate", icon: "ai", badge: "New", badgeType: "new" },
   { label: "Templates", icon: "template" },
-   { label: "Projects", icon: "projects" },
-  { label: "Favorites", icon: "favorites" }, 
+  { label: "Projects", icon: "projects" },
+  { label: "Favorites", icon: "favorites" },
   { label: "Profile", icon: "profile" },
   { label: "Settings", icon: "settings" },
 ];
@@ -517,7 +518,6 @@ const GLOBAL_CSS = `
 `;
 
 // ─── Sub-components ──────────────────────────────────────────────
-
 function GlowLine() {
   return <div className="av-glow-line" />;
 }
@@ -566,8 +566,9 @@ function Avatar({ size = 33 }) {
 
 // ─── Desktop Navbar ──────────────────────────────────────────────
 function DesktopNavbar({ active, setActive }) {
-  const [loggedIn, setLoggedIn] = useState(false);
 
+
+  const Navigate = useNavigate()
   return (
     <nav className="av-navbar" style={{ position: "relative" }}>
       <GlowLine />
@@ -596,11 +597,10 @@ function DesktopNavbar({ active, setActive }) {
 
       <div className="av-nav-right">
         <button
-          className={`av-login-btn${loggedIn ? " logged" : ""}`}
-          onClick={() => setLoggedIn(v => !v)}
+          className={`av-login-btn`}
+          onClick={() => Navigate("/Auth")}
         >
-          <Icon path={loggedIn ? ICONS.check : ICONS.login} size={13} strokeWidth={2} />
-          {loggedIn ? "Logged in" : "Log in"}
+          Login
         </button>
 
         <button className="av-cta-btn">
@@ -702,6 +702,7 @@ function MobileSidebar({ active, setActive, open, onClose }) {
 
 // ─── Root Export ─────────────────────────────────────────────────
 export default function Navbar() {
+ 
   const [active, setActive] = useState("Home");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -712,7 +713,7 @@ export default function Navbar() {
     window.addEventListener("resize", check);
     return () => window.removeEventListener("resize", check);
   }, []);
-
+  
   // Inject global CSS once
   useEffect(() => {
     const id = "aivorax-navbar-styles";
